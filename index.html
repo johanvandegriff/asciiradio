@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>AsciiRadio</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/xterm.css" />
   <script src="/xterm.js"></script>
@@ -13,6 +14,12 @@
   </div>
   <div id="stream">
     <audio id="audio" src="/audio" controls muted autoplay></audio>
+    Welcome to Johan's stream at asciiradio.johanv.xyz! Soon this will be open for anyone to sign up and stream text+audio.
+    main site: <a target="_blank" href="https://johanv.xyz">johanv.xyz</a>
+    | old streams: <a target="_blank" href="https://odysee.com/@johanv">LBRY</a>
+    | stream announcements:
+    <a target="_blank" href="https://fosstodon.org/@johanv">mastodon</a>
+    | this site is <a href="https://gitlab.com/johanvandegriff/asciiradio">open source.</a>
     <div id="terminal"></div>
   </div>
   <div id="chat">
@@ -30,6 +37,7 @@
     //term.resize(127, 35); //large laptop, 3 zooms?
     //term.resize(135, 40); //small laptop 3 zooms
     term.resize(112, 33); //small laptop, 2 zooms
+    //terminal.setOption("fontSize", 12);
     term.open(document.getElementById('terminal'));
 
     var socket = io();

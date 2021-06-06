@@ -5,7 +5,7 @@ body {
     padding:0 10px; */
     height: 100%;
     line-height:1.6;
-    font-size:18px;
+    font-size:15px;
     background-color: #333;
     color:white;
     overflow-x: hidden; /*tmp hack, some element is too wide but i cannot find it*/
