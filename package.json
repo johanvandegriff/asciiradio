@@ -1,11 +1,11 @@
 {
-    "name": "my-xtermjs-test",
+    "name": "asciiradio",
     "version": "0.0.1",
-    "description": "xterm.js test for terminal streaming",
+    "description": "lightweight text and audio streaming",
     "license": "AGPL-3.0-or-later",
     "repository": {
         "type": "git",
-        "url": "git://gitlab.com/johanvandegriff/live.johanv.xyz.git"
+        "url": "git://gitlab.com/johanvandegriff/asciiradio.git"
     },
     "dependencies": {
         "@types/node": "^14.17.0",

@@ -11,8 +11,18 @@
   <div id="overlay" onclick="unmute()">
     <div id="overlayText">Click to Unmute</div>
   </div>
-  <audio id="audio" src="/audio" controls muted autoplay></audio>
-  <div id="terminal"></div>
+  <div id="stream">
+    <audio id="audio" src="/audio" controls muted autoplay></audio>
+    <div id="terminal"></div>
+  </div>
+  <div id="chat">
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      name: <input id="name" autocomplete="off" /><br/>
+      <input id="m" autocomplete="off" autofocus />
+      <button>send</button>
+    </form>
+  </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -45,6 +55,29 @@
 
       document.getElementById("overlay").style.display = "none";
     }
+
+
+
+    socket.on('chat message', function(msg) {
+      var messages = document.getElementById('messages');
+      var newLi = document.createElement("li");
+      messages.appendChild(newLi);
+      newLi.appendChild(document.createTextNode(msg.name+": "+msg.text));
+
+      //scroll to the most recent message
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    document.getElementById('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        var text = document.getElementById('m').value;
+        if (text != '') {
+            var name = document.getElementById('name').value;
+            socket.emit('chat message', {"name": name, "text": text});
+        }
+        document.getElementById('m').value = '';
+        return false;
+    });
  </script>
 </body>
 

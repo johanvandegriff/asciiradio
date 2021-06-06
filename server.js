@@ -48,6 +48,12 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('client disconnected from terminal data');
     });
+
+    //chatroom
+    socket.on('chat message', (msg) => {
+        console.log('message:', msg.name, 'text:', msg.text);
+        io.emit('chat message', {'name': msg.name, 'text': msg.text});
+    });
 });
 
 // https://riptutorial.com/node-js/example/22405/a-simple-tcp-server
@@ -214,7 +220,7 @@ app.get('/audio', function(req, res){
 
 //TODO remove audio users from clients list when disconnected
 //TODO autoplay while muted not working
-//TODO deploy to a subdomain
+//TODO add delay to terminal to match audio
 //TODO customize audio tag with css https://blogs.perficient.com/2017/12/19/how-to-customize-your-own-html5-audio-player/
 //TODO pick a domain name
 //TODO deploy to full domain
