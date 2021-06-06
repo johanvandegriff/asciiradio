@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/xterm.css" />
+  <script src="/xterm.js"></script>
+</head>
+
+<body>
+  <div id="overlay" onclick="unmute()">
+    <div id="overlayText">Click to Unmute</div>
+  </div>
+  <audio id="audio" src="/audio" controls muted autoplay></audio>
+  <div id="terminal"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var term = new Terminal();
+    //term.resize(127, 35); //large laptop, 3 zooms?
+    //term.resize(135, 40); //small laptop 3 zooms
+    term.resize(112, 33); //small laptop, 2 zooms
+    term.open(document.getElementById('terminal'));
+
+    var socket = io();
+    socket.on('terminal', function (data) {
+      console.log('terminal data received, length:', data.length)
+      term.write(data.replace(/\n/g, '\n\r'));
+    });
+
+
+    var a = document.getElementById("audio");
+
+    //a.muted = true;
+    //a.autoplay = true;
+    a.oncanplay=() => {a.play()};
+
+    function unmute() {
+      a.muted = false;
+      //if (a.buffered.length > 0) {
+      //  a.currentTime = a.buffered.end(a.buffered.length-1);
+      //}
+      a.play();
+      console.log("unmuted");
+
+      document.getElementById("overlay").style.display = "none";
+    }
+ </script>
+</body>
+
+</html>
