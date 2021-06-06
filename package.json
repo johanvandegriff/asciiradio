@@ -9,7 +9,6 @@
     },
     "dependencies": {
         "@types/node": "^14.17.0",
-        "audio-speaker": "^1.5.1",
         "dotenv": "^10.0.0",
         "express": "^4.15.2",
         "socket.io": "^4.1.2",

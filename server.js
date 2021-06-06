@@ -6,7 +6,7 @@ const io = require("socket.io")(web_server);
 const net = require('net');
 const dotenv = require('dotenv'); //for storing secrets in an env file
 
-var DEFAULT_WEB_PORT = 18947;
+var DEFAULT_WEB_PORT = 8080;
 var DEFAULT_TERMINAL_PORT = 1337;
 var DEFAULT_AUDIO_PORT = 1338;
 
