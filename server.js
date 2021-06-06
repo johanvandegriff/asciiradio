@@ -22,6 +22,8 @@ var audio_port = process.env.AUDIO_PORT || DEFAULT_AUDIO_PORT;
 
 app.get('/', (req, res) => { res.sendFile(__dirname + '/index.html') });
 app.get('/style.css', (req, res) => { res.sendFile(__dirname + '/style.css') });
+app.get('/chat', (req, res) => { res.sendFile(__dirname + '/chat.html') });
+app.get('/chat.js', (req, res) => { res.sendFile(__dirname + '/chat.js') });
 
 //expose js libraries to client so they can run in the browser
 app.get('/xterm.css', (req, res) => { res.sendFile(__dirname + '/node_modules/xterm/css/xterm.css') });
@@ -225,7 +227,7 @@ app.get('/audio', function(req, res){
 //TODO pick a domain name
 //TODO deploy to full domain
 //TODO multi-user support
-
-
+//TODO save asciicasts and audio
+//TODO resize xtermjs
 
 
