@@ -9,11 +9,22 @@
 </head>
 
 <body>
-  <div id="overlay" onclick="unmute()">
+  <div id="overlay" onclick="unmute_func()">
     <div id="overlayText">Click to Unmute</div>
   </div>
   <div id="stream">
-    <audio id="audio" src="/audio" controls muted autoplay></audio>
+    <audio id="audio" src="/audio" muted autoplay></audio>
+    <input type="range" min="0" max="100" value="100" class="slider" id="volume" onchange="set_volume()" onmousemove="set_volume()" ontouchmove="set_volume()">
+    <!-- https://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html#22918864 --->
+    <input type="checkbox" name="un-mute" id="un-mute">
+    <label for="un-mute" class="unmute">
+        <img src="http://upload.wikimedia.org/wikipedia/commons/3/3f/Mute_Icon.svg" alt="Mute_Icon.svg" title="Mute icon" class="mute-img">
+    </label>
+    <label for="un-mute" class="mute">
+        <img src="http://upload.wikimedia.org/wikipedia/commons/2/21/Speaker_Icon.svg" alt="Speaker_Icon.svg" title="Unmute/speaker icon" class="mute-img">
+    </label>
+    <button id="toggle_chat" onclick="toggle_chat_func()">hide chat</button>
+    
     Welcome to Johan's stream at asciiradio.johanv.xyz! Soon this will be open for anyone to sign up and stream text+audio.
     main site: <a target="_blank" href="https://johanv.xyz">johanv.xyz</a>
     | old streams: <a target="_blank" href="https://odysee.com/@johanv">LBRY</a>
@@ -47,13 +58,22 @@
     });
 
 
+
+
     var a = document.getElementById("audio");
+    var unmute = document.getElementById('un-mute');
+
+    unmute.onclick = function() {
+      a.muted = !unmute.checked;
+    };
+
 
     //a.muted = true;
     //a.autoplay = true;
     a.oncanplay=() => {a.play()};
 
-    function unmute() {
+    function unmute_func() {
+      unmute.click();
       a.muted = false;
       //if (a.buffered.length > 0) {
       //  a.currentTime = a.buffered.end(a.buffered.length-1);
@@ -62,6 +82,23 @@
       console.log("unmuted");
 
       document.getElementById("overlay").style.display = "none";
+    }
+
+    function set_volume() {
+        a.volume=document.getElementById('volume').value/100;
+    }
+    set_volume();
+
+    var toggle_chat = document.getElementById("toggle_chat");
+    var chat = document.getElementById("chat");
+    function toggle_chat_func() {
+        if(toggle_chat.innerText == "hide chat") {
+            chat.style.display = "none";
+            toggle_chat.innerText = "show chat";
+        } else {
+            chat.style.display = "initial";
+            toggle_chat.innerText = "hide chat";
+        }
     }
   </script>
   <script src="/chat.js"></script>

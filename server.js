@@ -12,8 +12,10 @@ var DEFAULT_AUDIO_PORT = 1338;
 
 //options: "wav"
 //         "mpeg" (mp3) (not implemented)
-//         "ogg" (not implemented)
+//         "ogg"
 var AUDIO_FORMAT = "ogg";
+
+var TERMINAL_DELAY = 5500;
 
 var web_port = process.env.WEB_PORT || DEFAULT_WEB_PORT;
 var terminal_port = process.env.TERMINAL_PORT || DEFAULT_TERMINAL_PORT;
@@ -70,10 +72,12 @@ terminal_server.on('connection', function (socket) {
     socket.write('Hello, terminal client.\n');
 
     socket.on('data', function (chunk) {
-        data = chunk.toString();
-        console.log('terminal data received from the streamer, length:', data.length);
-        io.emit('terminal', data); //send to the web clients to display in the terminal
-        allTerminalData += data; //save all the terminal data for new clients
+        setTimeout(function() {
+            data = chunk.toString();
+            console.log('terminal data received from the streamer, length:', data.length);
+            io.emit('terminal', data); //send to the web clients to display in the terminal
+            allTerminalData += data; //save all the terminal data for new clients
+        }, TERMINAL_DELAY);
     });
 
     socket.on('end', function () {
@@ -222,8 +226,6 @@ app.get('/audio', function(req, res){
 
 //TODO remove audio users from clients list when disconnected
 //TODO autoplay while muted not working
-//TODO add delay to terminal to match audio
-//TODO customize audio tag with css https://blogs.perficient.com/2017/12/19/how-to-customize-your-own-html5-audio-player/
 //TODO pick a domain name
 //TODO deploy to full domain
 //TODO multi-user support
