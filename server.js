@@ -228,8 +228,17 @@ app.get('/audio', function(req, res){
 //TODO autoplay while muted not working
 //TODO pick a domain name
 //TODO deploy to full domain
+//TODO decide on URL structure for multi-user
 //TODO multi-user support
 //TODO save asciicasts and audio
 //TODO resize xtermjs
+//TODO mp3 support
+//TODO read wav header from incoming data
+//TODO capture audio from the browser instead of tcp
+//TODO multi-user terminal streaming
+//TODO convert to rtmp stream and forward to other services
+//TODO create example repo for terminal streaming
+//TODO create example repo for audio streaming
+//TODO create npm library for audio streaming
 
 
