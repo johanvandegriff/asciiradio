@@ -11,7 +11,7 @@ In a separate terminal, run this command to stream audio:
 ```
 arecord -f cd -t raw | oggenc -r -q 0 - | nc localhost 1338
 ```
-
+For the above command, you will need to install `vorbis-tools` and `netcat`.
 
 ## Other options
 
