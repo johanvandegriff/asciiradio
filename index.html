@@ -9,20 +9,20 @@
 </head>
 
 <body>
-  <div id="overlay" onclick="unmute_func()">
+  <!-- <div id="overlay" onclick="unmute_func()">
     <div id="overlayText">Click to Unmute</div>
-  </div>
+  </div> -->
   <div id="stream">
     <audio id="audio" src="/audio" muted autoplay></audio>
-    <input type="range" min="0" max="100" value="100" class="slider" id="volume" onchange="set_volume()" onmousemove="set_volume()" ontouchmove="set_volume()">
     <!-- https://stackoverflow.com/questions/22918220/how-to-create-a-only-mute-unmute-button-like-youtube-in-html#22918864 --->
-    <input type="checkbox" name="un-mute" id="un-mute">
-    <label for="un-mute" class="unmute">
+    <input type="checkbox" name="mute-button" id="mute-button" checked>
+    <label for="mute-button" class="unmute">
         <img src="http://upload.wikimedia.org/wikipedia/commons/3/3f/Mute_Icon.svg" alt="Mute_Icon.svg" title="Mute icon" class="mute-img">
     </label>
-    <label for="un-mute" class="mute">
+    <label for="mute-button" class="mute">
         <img src="http://upload.wikimedia.org/wikipedia/commons/2/21/Speaker_Icon.svg" alt="Speaker_Icon.svg" title="Unmute/speaker icon" class="mute-img">
     </label>
+    <input type="range" min="0" max="100" value="0" class="slider" id="volume" onchange="slider_volume()" onmousemove="slider_volume()" ontouchmove="slider_volume()">
     <button id="toggle_chat" onclick="toggle_chat_func()">hide chat</button>
     
     Welcome to Johan's stream at asciiradio.johanv.xyz! Soon this will be open for anyone to sign up and stream text+audio.
@@ -30,7 +30,7 @@
     | old streams: <a target="_blank" href="https://odysee.com/@johanv">LBRY</a>
     | stream announcements:
     <a target="_blank" href="https://fosstodon.org/@johanv">mastodon</a>
-    | this site is <a href="https://gitlab.com/johanvandegriff/asciiradio">open source.</a>
+    | this site is <a href="https://codeberg.org/johanvandegriff/asciiradio">open source.</a>
     <div id="terminal"></div>
   </div>
   <div id="chat">
@@ -48,7 +48,7 @@
     term.resize(127, 35); //large laptop, 3 zooms
     //term.resize(135, 40); //small laptop 3 zooms
     //term.resize(112, 33); //small laptop, 2 zooms
-    //terminal.setOption("fontSize", 12);
+    //term.setOption("fontSize", 12);
     term.open(document.getElementById('terminal'));
 
     var socket = io();
@@ -61,20 +61,31 @@
 
 
     var a = document.getElementById("audio");
-    var unmute = document.getElementById('un-mute');
+    var mute_button = document.getElementById('mute-button');
+    var oldVol = 50;
 
-    unmute.onclick = function() {
-      a.muted = !unmute.checked;
+    mute_button.onclick = function() {
+      if (mute_button.checked) {
+        oldVol = document.getElementById('volume').value;
+        document.getElementById('volume').value = 0;
+      } else {
+        document.getElementById('volume').value = oldVol;
+        a.volume=document.getElementById('volume').value/100;
+        a.muted = false;
+      }
+      set_volume();
     };
 
 
-    //a.muted = true;
     //a.autoplay = true;
     a.oncanplay=() => {a.play()};
 
     function unmute_func() {
-      unmute.click();
       a.muted = false;
+      mute_button.click();
+      document.getElementById('volume').value = oldVol;
+      a.volume=document.getElementById('volume').value/100;
+      set_volume();
       //if (a.buffered.length > 0) {
       //  a.currentTime = a.buffered.end(a.buffered.length-1);
       //}
@@ -84,8 +95,15 @@
       document.getElementById("overlay").style.display = "none";
     }
 
+    function slider_volume() {
+      set_volume();
+      if (a.volume == 0) oldVol = 5;
+    }
+
     function set_volume() {
         a.volume=document.getElementById('volume').value/100;
+        mute_button.checked = a.volume == 0
+	if (a.volume > 0) oldVol = document.getElementById('volume').value;
     }
     set_volume();
 
