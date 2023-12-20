@@ -15,7 +15,7 @@ var DEFAULT_AUDIO_PORT = 1338;
 //         "ogg"
 var AUDIO_FORMAT = "ogg";
 
-var TERMINAL_DELAY = 7800; //5500;
+var TERMINAL_DELAY = 6000; //7800; //5500;
 
 var web_port = process.env.WEB_PORT || DEFAULT_WEB_PORT;
 var terminal_port = process.env.TERMINAL_PORT || DEFAULT_TERMINAL_PORT;
